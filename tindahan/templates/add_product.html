@@ -1,0 +1,68 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tindahan sa JH</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+  </head>
+
+  <body style="background-color: #343541">
+    <div class="p-2 sm:p-12 text-white">
+      <div class="flex p-4 rounded-xl flex-col" style="background-color: #40414f">
+        <div class="flex flex-col">
+          <h1 class="font-bold text-[16px]">Add Products</h1>
+        </div>
+        <div class="flex-col mt-5">
+          <form action="{% url 'add_products' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="flex flex-col">
+              <div class="flex flex-col sm:flex-row justify-evenly flex-wrap">
+                <div class="flex flex-col mt-4 grow">
+                  <p class="mb-2">Full Name:</p>
+                  <input type="text" name="pname" id="pname" class="bg-gray-400 rounded-xl" placeholder="Product Name" required/>
+                </div>
+
+                <div class="flex flex-col mt-4 grow">
+                  <p class="mb-2">Status:</p>
+                  <select id="status" name="status" class="bg-gray-400 rounded-xl" required>
+                    <option value="Available">Available</option>
+                    <option value="Not Available">Not Available</option>
+                  </select>
+                </div>
+
+                <div class="flex flex-col mt-4 grow">
+                    <p class="mb-2">Food Type:</p>
+                    <select id="foodType" name="foodType" class="bg-gray-400 rounded-xl" required>
+                      <option value="Snacks">Snacks</option>
+                      <option value="Softdrinks">Softdrinks</option>
+                      <option value="Vegetables">Vegetables</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="flex flex-col mt-4">
+                <div class="flex flex-row flex-wrap">
+                                  
+                  <label class="block mb-2  text-gray-900 dark:text-white" for="file_input">Upload Profile Pic:</label>
+                  <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" name="productPic" type="file">
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or JPG</p>
+
+                </div>
+              </div>
+              <div class="flex flex-col mb-10 mt-10">
+                <h1>Price (₱):</h1>
+                <input type="number" name="price" class="rounded-xl bg-gray-400 mt-2" placeholder="Enter Price">
+              </div>
+              <div class="flex flex-row-reverse">
+                <button type="submit" class="bg-green-600 text-white p-2 rounded-lg hover:bg-primary/20">Add Product</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
