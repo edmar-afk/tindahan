@@ -160,10 +160,10 @@ var shoppingCart = (function() {
     var output = "";
     for(var i in cartArray) {
       output += "<tr>"
-        + "<td>" + cartArray[i].name + "</td>" 
+        + "<td>" + "<input type='text' name='orderName' class='item-count form-control' style='width:60px;' value='" + cartArray[i].name + "'>" + "</td>" 
         + "<td>(" + cartArray[i].price + ")</td>"
         + "<td><div class='input-group'>"
-        + "<input type='number' class='item-count form-control' style='width:50px;' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+        + "<input type='number' name='prices' class='item-count form-control' style='width:50px;' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
         + "</div></td>"
         + " = " 
         + "<td>" + cartArray[i].total + "</td>" 

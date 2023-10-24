@@ -1,0 +1,116 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'css/bottomNav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+    <link rel="stylesheet" href="{% static 'css/scrollbar.css' %}">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  </head>
+<body class="bg-slate-300">
+    
+
+    <div class="p-2 mb-12">
+      <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-4">
+            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Orders History</h5>
+      </div>
+      <div class="flow-root">
+        {% if user.is_authenticated %}
+     {% for orders in history %}
+            <ul role="list" class="divide-y  divide-gray-200 dark:divide-gray-700">
+                <li class=" sm:py-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xl font-medium text-gray-900 dark:text-white">
+                                {{orders.oname}} 
+                                
+                                {% if orders.status == "Ongoing" %}
+                                <span class="text-sm bg-blue-500 p-1 rounded-full">{{orders.status}}</span>
+
+                                {% elif orders.status == "Cancelled" %}
+                                <span class="text-sm bg-red-600 p-1 rounded-full">{{orders.status}}</span>
+
+                                {% elif orders.status == "Recieved" %}
+                                <span class="text-sm bg-green-600 p-1 rounded-full">{{orders.status}}</span>
+                                {% endif %}
+                            </p>
+                            <p class="text-lg text-gray-500 truncate dark:text-cyan-400">
+                              {{orders.location}} - {{orders.quantity}}pc(s)
+                            </p>
+                        </div>
+                        <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                          <form action="{% url 'statuschange' orders.id  %}" method="POST" class="border-none border-t-0">
+                            {% csrf_token %}
+                            <input style="visibility: hidden; display:none;" type="text" name="status" value="Cancelled" placeholder="Cancelled">
+                            
+                            {% if orders.status == "Ongoing" %}
+                            <input type="submit" value="Cancel" class="text-red-300 font-bold" style="font-size:15px;">
+                            {% endif %}
+                          
+                          </form>
+                        </div>
+                    </div>
+                  </li>
+                  
+                  <hr style="background-color:rgb(0, 153, 255);" class="mb-24">
+            </ul>
+            {% endfor %}
+    {% endif %}
+
+      </div>
+    </div>
+  </div>
+    
+      
+    <div class="bottom-navbar mt-[150px]">
+        <button>
+          <a href="{% url 'homepage' %}">
+            <i class='bx bx-home'></i>
+          </a>
+        </button>
+        <button class="active">
+          <a href="{% url 'history' %}">
+            <i class='bx bx-cart' ></i>
+          </a>
+        </button>
+        <button 
+            data-toggle="modal" data-target="#cart"
+            class="float">
+            <i class='bx bx-note' ></i>
+        </button>
+        <button>
+          <a href="{% url 'products' %}">
+            <i class='bx bx-shopping-bag' ></i>
+          </a>
+        </button>
+        <button>
+          <a href="{% url 'profile' %}">
+              <i class='bx bx-user' ></i>
+          </a>
+      </button>
+    </div>
+
+
+
+
+
+
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js'></script>
+  <script src="{% static 'js/bottomNav.js' %}"></script>
+  <script src="{% static 'js/products.js' %}"></script>
+</body>
+</html>
